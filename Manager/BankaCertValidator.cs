@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Contracts
+namespace Manager
 {
-    public class Class1
+    class BankaCertValidator
     {
     }
 }
