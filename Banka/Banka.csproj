@@ -47,7 +47,6 @@
   <ItemGroup>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Racun.cs" />
     <Compile Include="WCFBank.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -13,7 +13,7 @@ namespace Client
     {
         static void Main(string[] args)
         {
-            string bankCertCN = "Mika";
+            string bankCertCN = "Banka";
 
             NetTcpBinding binding = new NetTcpBinding();
             binding.Security.Transport.ClientCredentialType = TcpClientCredentialType.Certificate;

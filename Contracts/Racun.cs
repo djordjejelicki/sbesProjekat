@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Banka
+namespace Contracts
 {
-    class Racun
+    public class Racun
     {
         private long broj;
         private double iznos;

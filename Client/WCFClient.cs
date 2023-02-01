@@ -52,5 +52,36 @@ namespace Client
 
             this.Close();
         }
+
+        public void OtvoriRacun()
+        {
+            throw new NotImplementedException();
+            
+        }
+
+        public void ZatvoriRacun()
+        {
+            throw new NotImplementedException();
+        }
+
+        public void ProveriStanje()
+        {
+            throw new NotImplementedException();
+        }
+
+        public void Uplata()
+        {
+            throw new NotImplementedException();
+        }
+
+        public void Isplata()
+        {
+            throw new NotImplementedException();
+        }
+
+        public void Opomena()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

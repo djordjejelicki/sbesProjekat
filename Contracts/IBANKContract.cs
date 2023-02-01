@@ -12,5 +12,17 @@ namespace Contracts
     {
         [OperationContract]
         void TestCommunication();
+        [OperationContract]
+        void OtvoriRacun();
+        [OperationContract]
+        void ZatvoriRacun();
+        [OperationContract]
+        void ProveriStanje();
+        [OperationContract]
+        void Uplata();
+        [OperationContract]
+        void Isplata();
+        [OperationContract]
+        void Opomena();
     }
 }
