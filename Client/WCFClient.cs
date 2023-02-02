@@ -53,33 +53,33 @@ namespace Client
             this.Close();
         }
 
-        public void OtvoriRacun()
+        public bool OtvoriRacun(string username)
         {
             throw new NotImplementedException();
             
         }
 
-        public void ZatvoriRacun()
+        public bool ZatvoriRacun(long broj)
         {
             throw new NotImplementedException();
         }
 
-        public void ProveriStanje()
+        public bool ProveriStanje(long broj, out double iznos)
         {
             throw new NotImplementedException();
         }
 
-        public void Uplata()
+        public bool Uplata(long broj, double uplata)
         {
             throw new NotImplementedException();
         }
 
-        public void Isplata()
+        public bool Isplata(long broj, double isplata)
         {
             throw new NotImplementedException();
         }
 
-        public void Opomena()
+        public bool Opomena(long broj)
         {
             throw new NotImplementedException();
         }

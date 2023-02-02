@@ -13,16 +13,16 @@ namespace Contracts
         [OperationContract]
         void TestCommunication();
         [OperationContract]
-        void OtvoriRacun();
+        bool OtvoriRacun(string username);
         [OperationContract]
-        void ZatvoriRacun();
+        bool ZatvoriRacun(long broj);
         [OperationContract]
-        void ProveriStanje();
+        bool ProveriStanje(long broj, out double iznos);
         [OperationContract]
-        void Uplata();
+        bool Uplata(long broj, double uplata);
         [OperationContract]
-        void Isplata();
+        bool Isplata(long broj, double isplata);
         [OperationContract]
-        void Opomena();
+        bool Opomena(long broj);
     }
 }
