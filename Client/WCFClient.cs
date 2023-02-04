@@ -24,10 +24,9 @@ namespace Client
             this.Credentials.ServiceCertificate.Authentication.CustomCertificateValidator = new ClientCertValidator();
             this.Credentials.ServiceCertificate.Authentication.RevocationMode = X509RevocationMode.NoCheck;
 
-            this.Credentials.ClientCertificate.Certificate = CertManager.GetCertificateFromStorage(StoreName
-                .My, StoreLocation.LocalMachine, cltCertCN);
+            this.Credentials.ClientCertificate.Certificate = CertManager.GetCertificateFromStorage(StoreName.My, StoreLocation.LocalMachine, cltCertCN);
 
-
+            
             factory = this.CreateChannel();
         }
 
@@ -39,7 +38,8 @@ namespace Client
             }
             catch(Exception e)
             {
-                Console.WriteLine("[TestCommunication] ERROR = {0}", e.Message); 
+                Console.WriteLine("[TestCommunication] ERROR = {0}", e.Message);
+                Console.WriteLine(e.StackTrace);
             }
         }
 
@@ -55,33 +55,33 @@ namespace Client
 
         public bool OtvoriRacun(string username)
         {
-            throw new NotImplementedException();
+           return factory.OtvoriRacun(username);
             
         }
 
         public bool ZatvoriRacun(long broj)
         {
-            throw new NotImplementedException();
+            return factory.ZatvoriRacun(broj);
         }
 
         public bool ProveriStanje(long broj, out double iznos)
         {
-            throw new NotImplementedException();
+            return factory.ProveriStanje(broj,out iznos);
         }
 
         public bool Uplata(long broj, double uplata)
         {
-            throw new NotImplementedException();
+            return factory.Uplata(broj,uplata);
         }
 
         public bool Isplata(long broj, double isplata)
         {
-            throw new NotImplementedException();
+            return factory.Isplata(broj,isplata);
         }
 
         public bool Opomena(long broj)
         {
-            throw new NotImplementedException();
+            return factory.Opomena(broj);
         }
     }
 }

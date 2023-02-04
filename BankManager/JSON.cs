@@ -74,6 +74,7 @@ namespace BankManager
 
             File.WriteAllText(path, file);
             
+            
         }
 
         public static void DeleteRacun(string username)
@@ -100,10 +101,10 @@ namespace BankManager
                             }
                         }
                     }
-                    file = JsonConvert.SerializeObject(racuni);
-                    File.WriteAllText(path, file);
+                    
                 }
-
+                file = JsonConvert.SerializeObject(racuni);
+                File.WriteAllText(path, file);
             }
 
 

@@ -15,7 +15,7 @@ namespace BankManager
         {
 
             X509Certificate2 bankCert = CertManager.GetCertificateFromStorage(StoreName.My, StoreLocation.LocalMachine,
-                Formatter.ParseName(WindowsIdentity.GetCurrent().Name));
+                "Banka");
 
             if (!certificate.Issuer.Equals(bankCert.Issuer))
             {

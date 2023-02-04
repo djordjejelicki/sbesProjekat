@@ -3,8 +3,10 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Security.Cryptography.X509Certificates;
+using System.Security.Principal;
 using System.ServiceModel;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace Client
@@ -19,13 +21,27 @@ namespace Client
             binding.Security.Transport.ClientCredentialType = TcpClientCredentialType.Certificate;
 
             X509Certificate2 bankCert = CertManager.GetCertificateFromStorage(StoreName.My, StoreLocation.LocalMachine, bankCertCN);
-            EndpointAddress address = new EndpointAddress(new Uri("net.tcp://localhost:9999/receiver"),
+            EndpointAddress address = new EndpointAddress(new Uri("net.tcp://localhost:9999/Receiver"),
                 new X509CertificateEndpointIdentity(bankCert));
 
             using (WCFClient proxy = new WCFClient(binding, address))
             {
-                proxy.TestCommunication();
-                Console.WriteLine("TestCommunication() finished. Press <enter> to continue ...");
+                WindowsIdentity identity = WindowsIdentity.GetCurrent();
+                WindowsPrincipal principal = new WindowsPrincipal(identity);
+                if (principal.IsInRole("Korisnik"))
+                {
+                    KorisnikInterface(proxy);
+                }
+                else if (principal.IsInRole("Sluzbenik")) 
+                {
+                    SluzbenikInterface(proxy);
+                }
+                else
+                {
+                    Console.WriteLine("Korisnik ne pripada nijednoj grupi");
+                }
+                
+               
                 Console.ReadLine();
             }
         }

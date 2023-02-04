@@ -16,7 +16,7 @@ namespace Banka
     {
         static void Main(string[] args)
         {
-            string bankCertCN = Formatter.ParseName(WindowsIdentity.GetCurrent().Name);
+            string bankCertCN = "Banka";
 
             NetTcpBinding binding = new NetTcpBinding();
             binding.Security.Transport.ClientCredentialType = TcpClientCredentialType.Certificate;

@@ -27,16 +27,24 @@ namespace Banka
                             racun.Iznos -= isplata;
                             racun.PoslednjaTransakcija = DateTime.Now;
                             JSON.SaveRacun(racun);
+                            try
+                            {
+                                Audit.IsplataSuccess(broj);
+                            }
+                            catch (Exception ex)
+                            {
+                                Console.WriteLine("AUDIT GRESKA: " + ex.Message);
+                            }
                             return true;
                         }
                         else
                         {
-                            return false;
+                            throw new Exception("Iznos prekoracuje dozvoljeni minus");
                         }
                     }
                     else
                     {
-                        return false;
+                        throw new Exception("Racun je blokiran");
                     }
 
                     
@@ -44,16 +52,24 @@ namespace Banka
                 else
                 {
 
-                    return false;
+                    throw new Exception("Nepostojuci racun");
                 }
             }
             catch (Exception e)
             {
 
                 Console.WriteLine(e.Message);
+                try
+                {
+                    Audit.IsplataFailure(broj,e.Message);
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine("AUDIT GRESKA: " + ex.Message);
+                }
                 return false;
             }
-            //throw new NotImplementedException();
+            
         }
 
         public bool Opomena(long broj)
@@ -69,52 +85,87 @@ namespace Banka
                     {
                         racun.Blokiran = true;
                         JSON.SaveRacun(racun);
+                        try
+                        {
+                            Audit.OpomenaSuccess(broj);
+                        }
+                        catch (Exception ex)
+                        {
+                            Console.WriteLine("AUDIT GRESKA: " + ex.Message);
+                        }
                         return true;
                     }
                     else
                     {
-                        return false;
+                        throw new Exception("Racun ima vece stanje od 0");
                     }
 
                 }
                 else
                 {
 
-                    return false;
+                    throw new Exception("Nepostojeci racun");
                 }
             }
             catch (Exception e)
             {
 
                 Console.WriteLine(e.Message);
+                try
+                {
+                    Audit.OpomenaFailure(broj,e.Message);
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine("AUDIT GRESKA: " + ex.Message);
+                }
                 return false;
             }
 
-            //throw new NotImplementedException();
+            
         }
 
         public bool OtvoriRacun(string username)
         {
             
             List<Racun> racuni = JSON.ReadRacuni();
-            foreach(Racun r in racuni)
+            if (racuni != null)
             {
-                if(r.Username == username)
+                foreach (Racun r in racuni)
                 {
-                    return false;
+                    if (r.Username == username)
+                    {
+                        try
+                        {
+                            Audit.OtvoriRacunFailure(username, "Racun vec postoji");
+                        }
+                        catch (Exception ex)
+                        {
+                            Console.WriteLine("AUDIT GRESKA: " + ex.Message);
+                        }
+                        return false;
+                    }
                 }
             }
             Random rnd = new Random();
             string cardNumber = string.Empty;
-
-            for (int i = 0; i < 32; i++)
+            cardNumber += rnd.Next(1, 9).ToString();
+            for (int i = 0; i < 15; i++)
             {
                 cardNumber += rnd.Next(0, 9).ToString();
             }
             Racun racun = new Racun((long)Convert.ToDouble(cardNumber), 0, 30000, false, DateTime.Now, username);
             JSON.SaveRacun(racun);
+            try
+            {
+                Audit.OtvoriRacunSuccess(username);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("AUDIT GRESKA: " + ex.Message);
+            }
             return true;
-            //throw new NotImplementedException();
+            
         }
 
         public bool ProveriStanje(long broj, out double iznos)
@@ -127,18 +178,34 @@ namespace Banka
                 if (racun != null)
                 {
                     iznos = racun.Iznos;
+                    try
+                    {
+                        Audit.ProveriStanjeSuccess(broj);
+                    }
+                    catch (Exception ex)
+                    {
+                        Console.WriteLine("AUDIT GRESKA: " + ex.Message);
+                    }
                     return true;
                 }
                 else
                 {
-                    iznos = -1;
-                    return false;
+
+                    throw new Exception("Pokusaj provera stanja nepostojeceg racuna");
                 }
             }
             catch (Exception e)
             {
                 iznos = -1;
                 Console.WriteLine(e.Message);
+                try
+                {
+                    Audit.ProveriStanjeFailure(broj,e.Message);
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine("AUDIT GRESKA: " + ex.Message);
+                }
                 return false;
             }
             //throw new NotImplementedException();
@@ -165,24 +232,44 @@ namespace Banka
                         if(racun.Blokiran == true)
                         {
                             racun.Blokiran = false;
-                            JSON.SaveRacun(racun);
+                            
                         }
+                        
+                    }
+                    JSON.SaveRacun(racun);
+                    try
+                    {
+                        Audit.UplataSuccess(broj);
+                    }
+                    catch (Exception ex)
+                    {
+                        Console.WriteLine("AUDIT GRESKA:  " + ex.Message);
                     }
                     return true;
                 }
                 else
                 {
-                   
-                    return false;
+
+                    throw new Exception("Pokusaj uplate na nepostojeci racun");
                 }
             }
             catch (Exception e)
             {
+
                 
                 Console.WriteLine(e.Message);
+                try
+                {
+                    Audit.UplataFailure(broj,e.Message);
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine("AUDIT GRESKA:  " + ex.Message);
+                }
+
                 return false;
             }
-            //throw new NotImplementedException();
+            
         }
 
         public bool ZatvoriRacun(long broj)
@@ -195,19 +282,35 @@ namespace Banka
                 if (racun != null)
                 {
                     JSON.DeleteRacun(racun.Username);
+                    try
+                    {
+                        Audit.ZatvoriRacunSuccess(broj);
+                    }
+                    catch (Exception ex)
+                    {
+                        Console.WriteLine("AUDIT GRESKA: " + ex.Message);
+                    }
                     return true;
 
                 }
                 else
                 {
 
-                    return false;
+                    throw new Exception("Greska pokusaj brisanja nepostojeceg racuna");
                 }
             }
             catch (Exception e)
             {
 
                 Console.WriteLine(e.Message);
+                try
+                {
+                    Audit.ZatvoriRacunFailure(broj,e.Message);
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine("AUDIT GRESKA: " + ex.Message);
+                }
                 return false;
             }
             //throw new NotImplementedException();
