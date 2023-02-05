@@ -53,9 +53,9 @@ namespace Client
             this.Close();
         }
 
-        public bool OtvoriRacun(string username)
+        public bool OtvoriRacun(string username, out long broj)
         {
-           return factory.OtvoriRacun(username);
+           return factory.OtvoriRacun(username, out broj);
             
         }
 

@@ -13,7 +13,7 @@ namespace Contracts
         [OperationContract]
         void TestCommunication();
         [OperationContract]
-        bool OtvoriRacun(string username);
+        bool OtvoriRacun(string username, out long broj);
         [OperationContract]
         bool ZatvoriRacun(long broj);
         [OperationContract]

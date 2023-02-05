@@ -125,9 +125,9 @@ namespace Banka
             
         }
 
-        public bool OtvoriRacun(string username)
+        public bool OtvoriRacun(string username, out long broj)
         {
-            
+             broj = 0; 
             List<Racun> racuni = JSON.ReadRacuni();
             if (racuni != null)
             {
@@ -154,6 +154,7 @@ namespace Banka
             {
                 cardNumber += rnd.Next(0, 9).ToString();
             }
+            broj = (long)Convert.ToDouble(cardNumber);
             Racun racun = new Racun((long)Convert.ToDouble(cardNumber), 0, 30000, false, DateTime.Now, username);
             JSON.SaveRacun(racun);
             try

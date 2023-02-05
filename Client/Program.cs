@@ -142,9 +142,10 @@ namespace Client
                         {
                             Console.WriteLine("Unesite username korisnika kome otvarate racun: ");
                             string username = Console.ReadLine();
-                            if (proxy.OtvoriRacun(username))
+                            long broj;
+                            if (proxy.OtvoriRacun(username,out broj))
                             {
-                                Console.WriteLine("Uspesno ste otvorili racun korisniku: " + username);
+                                Console.WriteLine("Uspesno ste otvorili racun korisniku: " + username + " ,broj racuna je: " + broj);
                             }
                             else
                             {
